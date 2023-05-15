@@ -1,0 +1,67 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block title %}{{ category.name  }}Category{% endblock %}
+
+{% block body %}
+    <div class="site-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h2>{{ category.name }} Category</h2>
+
+                     {% if news|length<1 %}
+                         <p>Aucune news pour cette category</p>
+                    {% endif %}
+
+                </div>
+            </div>
+            <div class="d-flex justify-content-around flex-wrap m-4">
+                {% for _news in news %}
+                    <div class="card" style="width: 18rem;margin-top: 15px;">
+                        {% if _news.image%}
+                            <figure class="author-figure mb-0 mr-1 float-left">
+                        <a href="{{ path("app_news_show",{'id':_news.id}) }}">
+                            <img  width="285px" height="200px" src="{{ asset('uploads/'~_news.image) }}"
+                                  alt="{{ _news.title}}" >
+
+                        {% else %}
+                            <img src="{{ asset('uploads/'~_news.image) }}"
+
+                                 alt="{{ _news.title}}" class="fluid my-2 rounded">
+                            </a>
+                            </figure>
+                            <span class="d-inline-block mt-1">By <a href="#"><br>Carrol Atkinson</a></span>
+
+                        {% endif %}
+                        <div class="card-body">
+                            <span class="post-category text-white bg-warning mb-3">{{ _news.category.name }}</span>
+                            <h5 class="card-title">{{ _news.title }}</h5>
+                            <span>By Carrol Atkirison {{ _news.createdAt|ago }}</span>
+                            <p class="card-text">{{ _news.description }}</p>
+                            <a href="{{ path('app_news_show',{'id':_news.id}) }}" class="btn btn-primary"  >Read More</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+    <div class="row text-center pt-5 border-top">
+        <div class="col-md-12">
+            <div class="custom-pagination">
+                <span>1</span>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+{% endblock %}

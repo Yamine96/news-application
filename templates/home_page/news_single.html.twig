@@ -1,0 +1,220 @@
+{% extends 'layout/base.html.twig' %}
+{% block title %}{{ single_news.title }}{% endblock %}
+
+{% block body %}
+    <section class="site-section py-lg">
+        <div class="container">
+
+            <div class="row blog-entries element-animate">
+
+                <div class="col-md-12 col-lg-8 main-content">
+
+                    <div class="post-content-body ml-4">
+
+                        <td class="img-fluid rounded" class="rounded-pill">{% if single_news.image %}
+                                <img   src="{{ asset('uploads/'~single_news.image) }}"
+                                     width="800" height="300"
+                                     alt="{{ single_news.title }}" class="fluid my-2 rounded"/>
+                            {% else %}
+                                <img src="{{ absolute_url('uploads/'~single_news.image) }}"
+                                     width="800" height="300"
+                                     alt="{{ single_news.title}}" class="fluid my-2 rounded">
+                            {% endif %}</td>
+
+                        <h1>{{ single_news.title }}</h1>
+                        <p>{{ single_news.description  }}</p>
+
+
+
+                    <div class="comment-form-wrap pt-5">
+                        <h3 class="mb-5">Leave a comment</h3>
+                        {% if app.user %}
+                        {{ form_start(form) }}
+                           {{ form_widget(form.content,{'attr':{'class':'form form-control','placeholder':'comment'}}) }}<br>
+                           <input type="submit" value="save" class="btn btn-primary">
+                        {{ form_end(form) }}
+                            {% else %}
+                            You must be logged in to leave a comment - <a href="{{ path('app_login') }}">login</a>
+                        {% endif %}
+
+
+                        <ul class="comment-list">
+
+                        {% for  comment in comments %}
+                            <li class="comment">
+                                <div class="comment-body">
+                                    <h3>{{ comment.author.firstName }} {{ comment.author.lastName }}</h3>
+                                    <div class="meta">{{ comment.createdAt|ago }}</div>
+                                    <p>{{ comment.content }}</p>
+                                    <p><a href="#" class="reply rounded">Reply</a></p>
+                                </div>
+                            </li>
+                        {% endfor%}
+                        </ul>
+                       </div>
+                    </div>
+                 <!---
+                    <div class="pt-5">
+                        <p>Categories:  <a href="#">Food</a>, <a href="#">Travel</a>  Tags: <a href="#">#manila</a>, <a href="#">#asia</a></p>
+                    </div>
+
+
+                    <div class="pt-5">
+                        <h3 class="mb-5">6 Comments</h3>
+
+
+                            <li class="comment">
+                                <div class="vcard">
+                                    <img src="{{ asset('uploads/person_1.jpg') }}/person_1.jpg" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>Jean Doe</h3>
+                                    <div class="meta">January 9, 2018 at 2:21pm</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                    <p><a href="#" class="reply rounded">Reply</a></p>
+                                </div>
+
+                                <ul class="children">
+                                    <li class="comment">
+                                        <div class="vcard">
+                                            <img src="images/person_1.jpg" alt="Image placeholder">
+                                        </div>
+                                        <div class="comment-body">
+                                            <h3>Jean Doe</h3>
+                                            <div class="meta">January 9, 2018 at 2:21pm</div>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                            <p><a href="#" class="reply rounded">Reply</a></p>
+                                        </div>
+
+
+                                        <ul class="children">
+                                            <li class="comment">
+                                                <div class="vcard">
+                                                    <img src="images/person_1.jpg" alt="Image placeholder">
+                                                </div>
+                                                <div class="comment-body">
+                                                    <h3>Jean Doe</h3>
+                                                    <div class="meta">January 9, 2018 at 2:21pm</div>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                                    <p><a href="#" class="reply rounded">Reply</a></p>
+                                                </div>
+
+                                                <ul class="children">
+                                                    <li class="comment">
+                                                        <div class="vcard">
+                                                            <img src="images/person_1.jpg" alt="Image placeholder">
+                                                        </div>
+                                                        <div class="comment-body">
+                                                            <h3>Jean Doe</h3>
+                                                            <div class="meta">January 9, 2018 at 2:21pm</div>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                                            <p><a href="#" class="reply rounded">Reply</a></p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="comment">
+                                <div class="vcard">
+                                    <img src="images/person_1.jpg" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>Jean Doe</h3>
+                                    <div class="meta">January 9, 2018 at 2:21pm</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                                    <p><a href="#" class="reply rounded">Reply</a></p>
+                                </div>
+                            </li>
+                        </ul>
+
+
+
+                    </div>
+                -->
+                </div>
+
+                 <!-- END main-content -->
+
+                <div class="col-md-12 col-lg-4 sidebar">
+                    <div class="sidebar-box search-form-wrap">
+                        <form action="#" class="search-form">
+                            <div class="form-group">
+                                <span class="icon fa fa-search"></span>
+                                <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- END sidebar-box -->
+
+
+                    <div class="sidebar-box">
+                        <h3 class="heading">Popular Posts</h3>
+                        <div class="post-entry-sidebar">
+                            <ul>
+                                <li>
+                                    <a href="">
+                                        <img src="{{ asset('uploads/img_1.jpg') }}" alt="Image placeholder" class="mr-4">
+                                        <div class="text">
+                                            <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
+                                            <div class="post-meta">
+                                                <span class="mr-2">Dec 24, 2022 </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <img src="{{ asset('uploads/h1.jpg') }}" alt="Image placeholder" class="mr-4">
+                                        <div class="text">
+                                            <h4>Will Spider Become A Na’vi in Avatar 3?</h4>
+                                            <div class="post-meta">
+                                                <span class="mr-2">March 15, 2022 </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <img src="{{ asset('uploads/h2.jpg') }}" alt="Image placeholder" class="mr-4">
+                                        <div class="text">
+                                            <h4>James Harden 'seriously considering' return to old team in surprising NBA twist</h4>
+                                            <div class="post-meta">
+                                                <span class="mr-2">Jan 13, 2022 </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END sidebar-box -->
+
+                    <div class="sidebar-box">
+                        {% for  comment in comments %}
+                        <h3 class="heading">Categories</h3>
+                        <ul class="categories">
+                            <li><a href="#">Sport <span>(12)</span></a></li>
+                            <li><a href="#">Science <span>(22)</span></a></li>
+                            <li><a href="#">Training <span>(37)</span></a></li>
+                            <li><a href="#">Movie <span>(42)</span></a></li>
+
+                        </ul>
+                        {% endfor %}
+                    </div>
+                    <!-- END sidebar-box -->
+
+                </div>
+                <!-- END sidebar -->
+
+            </div>
+        </div>
+        </div>
+    </section>
+
+
+{% endblock%}

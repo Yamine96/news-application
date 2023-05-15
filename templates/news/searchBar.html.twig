@@ -1,0 +1,15 @@
+{{ form_start(searchForm , {
+    'attr':{'class':'col-lg-6 col-6 text-left'}
+}) }}
+<div class="input-group">
+
+    {{ form_widget(searchForm.text) }}
+
+    <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+    </div>
+</div>
+{{ form_end(searchForm) }}
+
